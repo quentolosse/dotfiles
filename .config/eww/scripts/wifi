@@ -1,13 +1,19 @@
 #!/bin/sh
 
 symbol() {
-[ $(cat /sys/class/net/w*/operstate) = down ] && echo  && exit
-echo 
+    [ $(cat /sys/class/net/w*/operstate) = down ] && echo 󰤭 && exit
+    echo 󰤨
+}
+
+color() {
+    [ $(cat /sys/class/net/w*/operstate) = down ] && echo "#FF5555" && exit
+    echo "#50FA7B"
 }
 
 name() {
-nmcli | grep "^wlp" | sed 's/\ connected\ to\ /Connected to /g' | cut -d ':' -f2
+    nmcli | grep "^wlp" | sed 's/\ connected\ to\ /Connected to /g' | cut -d ':' -f2
 }
 
-[ "$1" = "icon" ] && symbol && exit
-[ "$1" = "name" ] && name && exit
+[ "$1" = "icon"  ] && symbol && exit
+[ "$1" = "name"  ] && name   && exit
+[ "$1" = "color" ] && color  && exit

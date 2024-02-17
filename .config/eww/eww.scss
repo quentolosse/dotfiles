@@ -15,7 +15,7 @@ $white: #F8F8F2;
 
 *{
     all: unset;
-    font-family: 'Comic Mono', 'Font Awesome 6 Pro';
+    font-family: "JetBrainsMono NFM";
 }
 
 /** tooltip!! **/
@@ -44,8 +44,8 @@ tooltip label {
 
 // Internet
 .internet_class {
-    margin-right: 10px;
-    font-size: 20px;
+    margin: 0px 10px 0px 10px;
+    font-size: 40px;
 }
 
 // Clock

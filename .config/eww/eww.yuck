@@ -2,23 +2,11 @@
   (box :class "module-2" :vexpand "false" :hexpand "false"
     (label :class "separ" :text "|")))
 
-;; Ibus widget
-(defpoll IBUS_ENGINE :interval "3s" "ibus engine")
-(defwidget ibus []
-  (box :class "ibus_class"
-    (button
-      ;:tooltip "${IBUS_ENGINE}"
-      :style "color: ${IBUS_ENGINE == "Bamboo" ? "#F7768E" : "#7AA2F7"};"
-      :onclick "./scripts/set-ibus-engine"
-      {IBUS_ENGINE == "Bamboo" ? "" : ""}
-    )
-  )
-)
 
 ;; Internet widget
-(defpoll COL_WLAN :interval "5s" "./scripts/internet --COL")
-(defpoll ESSID_WLAN :interval "5s" "./scripts/internet --ESSID")
-(defpoll WLAN_ICON :interval "5s" "./scripts/internet --ICON")
+(defpoll COL_WLAN :interval "5s" "./scripts/wifi color")
+(defpoll ESSID_WLAN :interval "5s" "./scripts/wifi name")
+(defpoll WLAN_ICON :interval "5s" "./scripts/wifi icon")
 (defwidget internet [] 
   (box :class "internet_class" :vexpand "false" :hexpand "false" :space-evenly "false"
     (button
@@ -32,7 +20,7 @@
 
 ;; Clock widget
 (defpoll clock_time :interval "1s" "date +\%H:%M")
-(defpoll clock_date :interval "1h" "date '+%a, %d/%m'")
+(defpoll clock_date :interval "1h" "date '+%a %d/%m'")
 (defvar date_rev_0 false)
 (defvar date_rev_1 false)
 
@@ -175,10 +163,10 @@
 ;;      (sep)
 ;;      (volume)
 ;;      (sep)
+    (internet)
+    (sep)
     (clock :screen screen)
-;;      (sep)
-;;      (internet)
-;;     (ibus)
+      
   )
 )
 
