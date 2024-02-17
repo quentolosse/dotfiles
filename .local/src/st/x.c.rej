@@ -1,0 +1,11 @@
+--- x.c
++++ x.c
+@@ -254,6 +254,8 @@ static char *opt_line  = NULL;
+ static char *opt_name  = NULL;
+ static char *opt_title = NULL;
+ 
++static int focused = 0;
++
+ static int oldbutton = 3; /* button event on startup: 3 = release */
+ 
+ void
