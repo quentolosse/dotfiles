@@ -1,0 +1,9 @@
+- apps
+- wifi / bluetooth
+- little fetch ?
+- réorganiser à droite (raccourcis ?)
+- couleurs
+x citation du jour
+- find ? (lance rofi)
+- changeur de rice ?
+

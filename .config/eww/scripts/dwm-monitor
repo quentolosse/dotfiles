@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tail -f /tmp/dwm.log | grep -3 --line-buffered "selected_monitor_change_event" | grep --line-buffered "new_monitor_number" | awk -F ' ' '{print $2}'

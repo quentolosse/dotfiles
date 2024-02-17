@@ -1,0 +1,232 @@
+// Variable Color's
+$background: #282A36;
+$foreground: #F8F8F2;
+
+$black: #282A36;
+$gray: #44475A;
+$red: #FF5555;
+$orange: #FFB86C;
+$green: #50FA7B;
+$yellow: #F1FA8C;
+$blue: #6272A4;
+$magenta: #BD93F9;
+$cyan: #8BE9FD;
+$white: #F8F8F2;
+
+*{
+    all: unset;
+    font-family: 'Comic Mono', 'Font Awesome 6 Pro';
+}
+
+/** tooltip!! **/
+tooltip.background {
+    background-color: $black;
+    font-size: 15;
+    border-radius: 10px;
+    color: $foreground;
+}
+
+tooltip label {
+    margin: 5px 3px 3px;
+}
+
+/** General **/
+.bar_class {
+    background-color: $background;
+    border-radius: 15px;
+}
+
+// Ibus
+.ibus_class {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+// Internet
+.internet_class {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+// Clock
+.clock_class {
+    margin: 5px 5px 0px;
+}
+
+.clock_time_class {
+    color: $foreground;
+    font-size: 23px;
+}
+
+.clock_date_class {
+    margin: 5px 10px;
+}
+
+// Calendar
+.cal-box {
+    background-color: $black;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 10px;
+    .cal-inner-box {
+        padding: 1rem 1rem .2rem;
+        .cal {
+            &.highlight {
+                padding: 10rem;
+            }
+            padding: .8rem .25rem 0rem;
+            margin-left: 10px;
+        }
+    }
+}
+
+calendar:selected {
+    color: $yellow;
+    font-weight: bold;
+}
+
+calendar.header {
+    color: $red;
+    font-weight: bold;
+}
+
+calendar.button {
+    color: $magenta;
+}
+
+calendar.highlight {
+    color: $magenta;
+    font-weight: bold;
+}
+
+calendar:indeterminate {
+    color: $gray;
+    font-weight: normal;
+}
+
+.separ {
+    color: $gray;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 5px 5px 0px 5px;
+}
+
+// Battery
+.batbar {
+    background-color: #38384d;
+}
+.iconbat {
+    font-size: 18px;
+    margin: 11px;
+}
+.batcolor-100 {
+    color: #6CC551;
+}
+.batcolor-80 {
+    color: #C0D684;
+}
+.batcolor-60 {
+    color: #34dCDF;
+}
+.batcolor-40 {
+    color: #F2AF29;
+}
+.batcolor-20 {
+    color: #BA1F33;
+}
+.batcolor-charging {
+    color: #F5F749;
+}
+
+// Memory
+.membar {
+    color: #e0b089;
+    background-color: #38384d;
+}
+.iconmem {
+    color: #e0b089;
+    font-size: 15px;
+    margin: 13px;
+}
+.mem_class {
+    margin: 0px 10px 0px 3px;
+}
+
+// CPU
+.cpubar {
+    color: #60AFFF;
+    background-color: #38384d;
+}
+.iconcpu {
+    color: #60AFFF;
+    font-size: 15px;
+    margin: 13px;
+}
+.cpu_class {
+    margin: 0px 10px 0px 3px;
+}
+
+
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 16px;
+  min-height: 10px;
+  min-width: 70px;
+  margin: 0px 10px 0px 0px;
+}
+
+// Volume
+.volume_class {
+    margin: 0px 5px 0px 10px;
+}
+.volbar trough highlight {
+    background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+    border-radius: 10px;
+}
+.volume-icon {
+    font-size: 22;
+    color: #a1bdce;
+}
+.volume-icon-muted {
+    font-size: 22;
+    color: $red;
+}
+
+// Tags
+.selected_tag {
+    color: $green;
+    font-size: 2.0rem;
+}
+
+.occupied_tag {
+    color: $blue;
+    font-size: 2.0rem;
+}
+
+.urgent_tag {
+    color: $orange;
+    font-size: 2.0rem;
+}
+
+.void_tag {
+    color: $gray;
+    font-size: 2.0rem;
+}
+
+.occupied_tag:hover {
+    color: $cyan;
+}
+
+.urgent_tag:hover {
+    color: $cyan;
+}
+
+.void_tag:hover {
+    color: $cyan;
+}
+
+.tag_class {
+    padding: 5px 5px 5px 15px;
+}
