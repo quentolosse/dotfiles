@@ -1,0 +1,3 @@
+# My dotfiles
+
+Shell : `zsh`
