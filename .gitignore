@@ -1,0 +1,5 @@
+.local/src/dwm/drw.o
+.local/src/dwm/dwm
+.local/src/dwm/dwm-msg
+.local/src/dwm/dwm.o
+.local/src/dwm/util.o

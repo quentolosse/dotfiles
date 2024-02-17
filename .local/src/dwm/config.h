@@ -63,8 +63,8 @@ static char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-	"st", NULL, 
-	"/home/quentin/.local/bin/bar", NULL,
+//	"st", NULL,
+//	"dwm-suscribe > /tmp/dwm.log &", NULL,
 	NULL /* terminate */
 };
 

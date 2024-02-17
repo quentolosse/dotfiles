@@ -4,7 +4,7 @@ LOCK_FILE="$HOME/.cache/eww-calendar.lock"
 
 if [[ ! -f "$LOCK_FILE" ]]; then
     touch "$LOCK_FILE"
-    eww open calendar
+    eww open calendar --arg screen=$1
 else
     eww close calendar
     rm "$LOCK_FILE"

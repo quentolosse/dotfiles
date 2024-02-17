@@ -1,7 +1,7 @@
 
 #!/bin/sh
 tags() {
-    python3 ~/.config/eww/scripts/bar_0/dwm-tags.py
+    python3 scripts/bar_0/dwm-tags.py
 }
 tags
 tail -f /tmp/dwm.log | grep --line-buffered "tag_change_event" | while read -r; do 

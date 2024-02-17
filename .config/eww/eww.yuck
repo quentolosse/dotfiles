@@ -1,258 +1,225 @@
 (defwidget sep []
-    (box :class "module-2" :vexpand "false" :hexpand "false"
-      (label :class "separ" :text "|")))
-  
-  ;; Ibus widget
-  (defpoll IBUS_ENGINE :interval "3s" "ibus engine")
-  (defwidget ibus []
-    (box :class "ibus_class"
-      (button
-        ;:tooltip "${IBUS_ENGINE}"
-        :style "color: ${IBUS_ENGINE == "Bamboo" ? "#F7768E" : "#7AA2F7"};"
-        :onclick "./scripts/set-ibus-engine"
-        {IBUS_ENGINE == "Bamboo" ? "" : ""}
-      )
+  (box :class "module-2" :vexpand "false" :hexpand "false"
+    (label :class "separ" :text "|")))
+
+;; Ibus widget
+(defpoll IBUS_ENGINE :interval "3s" "ibus engine")
+(defwidget ibus []
+  (box :class "ibus_class"
+    (button
+      ;:tooltip "${IBUS_ENGINE}"
+      :style "color: ${IBUS_ENGINE == "Bamboo" ? "#F7768E" : "#7AA2F7"};"
+      :onclick "./scripts/set-ibus-engine"
+      {IBUS_ENGINE == "Bamboo" ? "" : ""}
     )
   )
-  
-  ;; Internet widget
-  (defpoll COL_WLAN :interval "5s" "./scripts/internet --COL")
-  (defpoll ESSID_WLAN :interval "5s" "./scripts/internet --ESSID")
-  (defpoll WLAN_ICON :interval "5s" "./scripts/internet --ICON")
-  (defwidget internet [] 
-    (box :class "internet_class" :vexpand "false" :hexpand "false" :space-evenly "false"
-      (button
-        :tooltip "${ESSID_WLAN}"
-        :wrap "false" 
-        :limit-width 12 
-        :style "color: ${COL_WLAN};" WLAN_ICON
-      )
+)
+
+;; Internet widget
+(defpoll COL_WLAN :interval "5s" "./scripts/internet --COL")
+(defpoll ESSID_WLAN :interval "5s" "./scripts/internet --ESSID")
+(defpoll WLAN_ICON :interval "5s" "./scripts/internet --ICON")
+(defwidget internet [] 
+  (box :class "internet_class" :vexpand "false" :hexpand "false" :space-evenly "false"
+    (button
+      :tooltip "${ESSID_WLAN}"
+      :wrap "false" 
+      :limit-width 12 
+      :style "color: ${COL_WLAN};" WLAN_ICON
     )
   )
-  
-  ;; Clock widget
-  (defpoll clock_time :interval "1s" "date +\%H:%M")
-  (defpoll clock_date :interval "1h" "date '+%a, %d/%m'")
-  (defvar date_rev false)
-  (defwidget clock []
-    (eventbox :onhover "eww update date_rev=true"
-              :onhoverlost "eww update date_rev=false"
-      (box :class "clock_class" :space-evenly "false" :orientation "h" :spacing "3" 
-        (label :text clock_time :class "clock_time_class" )
-        (revealer 
-          :transition "slideleft"
-          :reveal date_rev
-          :duration "550ms"
-          (button :class "clock_date_class" :onclick "~/.config/eww/scripts/popup_calendar" clock_date)
-        )
-      )
-    )
-  )
-  
-  ;; Calendar widget
-  (defpoll calendar_day :interval "10h" "date '+%d'")
-  (defpoll calendar_month :interval "10h" "scripts/getmonth")
-  (defpoll calendar_year :interval "10h" "date '+%Y'")
-  (defwidget cal []
-    (box :class "cal-box" 
-      :orientation "v"
-      (box :class "cal-inner-box"
-        (calendar :class "cal" 
-          :day calendar_day 
-          :month calendar_month
-          :year calendar_year)
-      )
-    )
-  )
-  
-  ;; Calendar window
-  (defwindow calendar 
-    :class "calendar_class"
-    :monitor 0
-    :geometry (geometry
-      :x "-10px"
-      :y "50px"
-      :width "250px"
-      :height "60px"
-      :anchor "top right")
-    (cal)
-  )
-  
-  ;; Battery widget
-  (defwidget bat []
-    (box 
-      :class {EWW_BATTERY.BAT0.status == "Charging" ? "batcolor-charging" :
-              EWW_BATTERY.BAT0.capacity < 20 ? "batcolor-20" :
-              EWW_BATTERY.BAT0.capacity < 40 ? "batcolor-40" :
-              EWW_BATTERY.BAT0.capacity < 60 ? "batcolor-60" :
-              EWW_BATTERY.BAT0.capacity < 80 ? "batcolor-80" :
-              "batcolor-100"} 
-      :vexpand "false" :hexpand "false" 
-      (circular-progress :class "batbar" 
-        :value {EWW_BATTERY.BAT0.capacity}
-        :thickness 4
-        (button :class "iconbat"
-          :tooltip "${EWW_BATTERY.BAT0.status} ${EWW_BATTERY.BAT0.capacity}%"
-          :show_truncated false
-          :onclick "./scripts/pop system"
-          :wrap false
-          {EWW_BATTERY.BAT0.status == "Charging" ? "" :
-          EWW_BATTERY.BAT0.capacity < 20 ? "" :
-          EWW_BATTERY.BAT0.capacity < 40 ? "" :
-          EWW_BATTERY.BAT0.capacity < 60 ? "" :
-          EWW_BATTERY.BAT0.capacity < 80 ? "" :
-          ""}))))
-  
-  ;; Memory widget
-  (defwidget mem []
-    (box :class "mem_class" :vexpand "false" :hexpand "false" 
-      (circular-progress :class "membar"
-        :value {EWW_RAM.used_mem_perc}
-        :thickness 4
-        (button :class "iconmem"
-          :limit-width 2
-          :tooltip "RAM: ${round(EWW_RAM.used_mem / 1048576000, 2)} GiB"
-          :onclick "./scripts/pop system"
-          :show_truncated false
-          :wrap false
-          ""))))
-  
-  ;; CPU widget
-  (defwidget cpu []
-    (box :class "cpu_class" :vexpand "false" :hexpand "false" 
-      (circular-progress :class "cpubar"
-        :value {EWW_CPU.avg}
-        :thickness 4
-        (button :class "iconcpu"
-          :limit-width 2
-          :tooltip "CPU: ${round(EWW_CPU.avg, 1)}%"
-          :onclick "./scripts/pop system"
-          :show_truncated false
-          :wrap false
-          ""))))
-  
-  ;; Volume widget
-  (defpoll volume_percent :interval "2s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
-  (defpoll plug_status :interval "2s" "./scripts/plug_status")
-  (defvar vol_reveal false)
-  (defvar volume-muted false)
-  (defwidget volume []
-    (eventbox :onhover "eww update vol_reveal=true"
-              :onhoverlost "eww update vol_reveal=false"
-    (box :class "volume_class" :space-evenly "false" :orientation "h" :spacing "3" 
-      (label :text {volume-muted ? "" :
-                    plug_status == "isPluggedIn" ? "" :
-                    volume_percent == 0 ? "" :
-                    volume_percent < 32 ? "" :
-                    volume_percent < 65 ? "" :
-                    ""}
-                   :class 'volume-icon ${volume-muted ? "volume-icon-muted" : ""}'
-      )
+)
+
+;; Clock widget
+(defpoll clock_time :interval "1s" "date +\%H:%M")
+(defpoll clock_date :interval "1h" "date '+%a, %d/%m'")
+(defvar date_rev_0 false)
+(defvar date_rev_1 false)
+
+(defwidget clock [screen]
+  (eventbox :onhover "eww update date_rev_${screen}=true"
+            :onhoverlost "eww update date_rev_${screen}=false"
+    (box :class "clock_class" :space-evenly "false" :orientation "h" :spacing "3" 
+      (label :text clock_time :class "clock_time_class" )
       (revealer 
         :transition "slideleft"
-        :reveal vol_reveal
-        :duration "350ms"
-        (scale  :class "volbar"
-          :value volume_percent
-          :orientation "h"
-          :tooltip "${volume_percent}%"
-          :max 100
-          :min 0
-          :onchange "amixer -D pulse sset Master {}%" )))))
-  
-  (defwidget right []
-    (box
-      :orientation "h" 
-      :halign "end"
-      :space-evenly false  
-      (sep)
+        :reveal {screen==0 ? date_rev_0 : date_rev_1}
+        :duration "550ms"
+        (button :class "clock_date_class" :onclick "./scripts/popup_calendar ${screen}" clock_date)
+      )
+    )
+  )
+)
+
+;; Calendar widget
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_month :interval "10h" "date +%m")
+(defpoll calendar_year :interval "10h" "date '+%Y'")
+(defwidget cal []
+  (box :class "cal-box" 
+    :orientation "v"
+    (box :class "cal-inner-box"
+      (calendar :class "cal" 
+        :day calendar_day 
+        :month calendar_month
+        :year calendar_year
+      )
+    )
+  )
+)
+
+;; Calendar window
+(defwindow calendar [screen]
+  :class "calendar_class"
+  :monitor screen
+  :geometry (geometry
+    :x "-25px"
+    :y "75px"
+    :width "250px"
+    :height "60px"
+    :anchor "top right")
+  (cal)
+)
+
+;; Battery widget
+(defwidget bat []
+  (box 
+    :class {EWW_BATTERY.BAT0.status == "Charging" ? "batcolor-charging" :
+            EWW_BATTERY.BAT0.capacity < 20 ? "batcolor-20" :
+            EWW_BATTERY.BAT0.capacity < 40 ? "batcolor-40" :
+            EWW_BATTERY.BAT0.capacity < 60 ? "batcolor-60" :
+            EWW_BATTERY.BAT0.capacity < 80 ? "batcolor-80" :
+            "batcolor-100"} 
+    :vexpand "false" :hexpand "false" 
+    (circular-progress :class "batbar" 
+      :value {EWW_BATTERY.BAT0.capacity}
+      :thickness 4
+      (button :class "iconbat"
+        :tooltip "${EWW_BATTERY.BAT0.status} ${EWW_BATTERY.BAT0.capacity}%"
+        :show_truncated false
+        :onclick "./scripts/pop system"
+        :wrap false
+        {EWW_BATTERY.BAT0.status == "Charging" ? "" :
+        EWW_BATTERY.BAT0.capacity < 20 ? "" :
+        EWW_BATTERY.BAT0.capacity < 40 ? "" :
+        EWW_BATTERY.BAT0.capacity < 60 ? "" :
+        EWW_BATTERY.BAT0.capacity < 80 ? "" :
+        ""}))))
+
+;; Memory widget
+(defwidget mem []
+  (box :class "mem_class" :vexpand "false" :hexpand "false" 
+    (circular-progress :class "membar"
+      :value {EWW_RAM.used_mem_perc}
+      :thickness 4
+      (button :class "iconmem"
+        :limit-width 2
+        :tooltip "RAM: ${round(EWW_RAM.used_mem / 1048576000, 2)} GiB"
+        :onclick "./scripts/pop system"
+        :show_truncated false
+        :wrap false
+        ""))))
+
+;; CPU widget
+(defwidget cpu []
+  (box :class "cpu_class" :vexpand "false" :hexpand "false" 
+    (circular-progress :class "cpubar"
+      :value {EWW_CPU.avg}
+      :thickness 4
+      (button :class "iconcpu"
+        :limit-width 2
+        :tooltip "CPU: ${round(EWW_CPU.avg, 1)}%"
+        :onclick "./scripts/pop system"
+        :show_truncated false
+        :wrap false
+        ""))))
+
+;; Volume widget
+(defpoll volume_percent :interval "2s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll plug_status :interval "2s" "./scripts/plug_status")
+(defvar vol_reveal false)
+(defvar volume-muted false)
+(defwidget volume []
+  (eventbox :onhover "eww update vol_reveal=true"
+            :onhoverlost "eww update vol_reveal=false"
+  (box :class "volume_class" :space-evenly "false" :orientation "h" :spacing "3" 
+    (label :text {volume-muted ? "" :
+                  plug_status == "isPluggedIn" ? "" :
+                  volume_percent == 0 ? "" :
+                  volume_percent < 32 ? "" :
+                  volume_percent < 65 ? "" :
+                  ""}
+                  :class 'volume-icon ${volume-muted ? "volume-icon-muted" : ""}'
+    )
+    (revealer 
+      :transition "slideleft"
+      :reveal vol_reveal
+      :duration "350ms"
+      (scale  :class "volbar"
+        :value volume_percent
+        :orientation "h"
+        :tooltip "${volume_percent}%"
+        :max 100
+        :min 0
+        :onchange "amixer -D pulse sset Master {}%" )))))
+
+(defwidget right [screen]
+  (box
+    :orientation "h" 
+    :halign "end"
+    :space-evenly false  
+    (sep)
 ;;      (cpu)
 ;;      (mem)
 ;;      (bat)
 ;;      (sep)
 ;;      (volume)
 ;;      (sep)
-      (clock)
+    (clock :screen screen)
 ;;      (sep)
 ;;      (internet)
 ;;     (ibus)
-    )
   )
-  
-  ;; Workspace widget
-  (deflisten tags_listen :initial "" `~/.config/eww/scripts/bar_0/dwm-tags`)
-  (defwidget tags []
-    (literal :content tags_listen))
-  
-  (defwidget left []
-    (box
-      :orientation "h" 
-      :halign "start"
-      :space-evenly false  
-      (tags)
-    )
-  )
-  
-  (defwidget mainbar []
-    (box
-      :class "bar_class"
-      :orientation "h"
-      (left)
-      (right)
-    )
-  )
+)
 
-  (defwindow bar_0
-    :class "bar"
-    :monitor 0
-    :geometry (geometry
-      :x "0%"
-      :y "20px"
-      :width "98%"
-      :height "50px"
-      :anchor "top center")
-    :stacking "fg"
-    :reserve (struts :distance "40px" :side "top")
-    :windowtype "dock"
-    :wm-ignore false
-    (mainbar)
-  )
+;; Workspace widget
+(deflisten tags_listen_0 :initial "" `./scripts/bar_0/dwm-tags`)
+(deflisten tags_listen_1 :initial "" `./scripts/bar_1/dwm-tags`)
 
-  ;; Workspace widget
-  (deflisten tags_listen_1 :initial "" `~/.config/eww/scripts/bar_1/dwm-tags`)
-  (defwidget tags_1 []
-    (literal :content tags_listen_1))
-  
-  (defwidget left_1 []
-    (box
-      :orientation "h" 
-      :halign "start"
-      :space-evenly false  
-      (tags_1)
-    )
-  )
+(defwidget tags [screen]
+  (literal :content {screen == 0 ? tags_listen_0 : tags_listen_1 })
+)
 
-  (defwidget mainbar_1 []
-    (box
-      :class "bar_class"
-      :orientation "h"
-      (left_1)
-      (right)
-    )
+(defwidget left [screen]
+  (box
+    :orientation "h" 
+    :halign "start"
+    :space-evenly false  
+    (tags :screen screen)
   )
+)
 
-  (defwindow bar_1
-    :class "bar"
-    :monitor 1
-    :geometry (geometry
-      :x "0%"
-      :y "20px"
-      :width "98%"
-      :height "50px"
-      :anchor "top center")
-    :stacking "fg"
-    :reserve (struts :distance "40px" :side "top")
-    :windowtype "dock"
-    :wm-ignore false
-    (mainbar_1)
+(defwidget mainbar [screen]
+  (box
+    :class "bar_class"
+    :orientation "h"
+    (left :screen screen)
+    (right :screen screen)
   )
+)
+
+(defwindow bar [screen]
+  :class "bar"
+  :monitor screen
+  :geometry (geometry
+    :x "0%"
+    :y "20px"
+    :width "1870px"
+    :height "50px"
+    :anchor "top center")
+  :stacking "fg"
+  :reserve (struts :distance "40px" :side "top")
+  :windowtype "dock"
+  :wm-ignore false
+  (mainbar :screen screen)
+)
