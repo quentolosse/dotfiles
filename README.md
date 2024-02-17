@@ -4,3 +4,5 @@
 - Shell : `zsh`
 - Terminal : `st`
 - Window Manager : `dwm`
+- Status bar : `eww`
+- Calendar : `calcure`
