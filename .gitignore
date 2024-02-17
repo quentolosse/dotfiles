@@ -3,3 +3,6 @@
 .local/src/dwm/dwm-msg
 .local/src/dwm/dwm.o
 .local/src/dwm/util.o
+.config/calcure/events.csv
+.config/calcure/info.log
+?config/calcure/tasks.csv
