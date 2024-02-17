@@ -1,5 +1,6 @@
 # My dotfiles
 
-Shell : `zsh`
-Terminal : `st`
-Window Manager : `dwm`
+## Riced things
+- Shell : `zsh`
+- Terminal : `st`
+- Window Manager : `dwm`
