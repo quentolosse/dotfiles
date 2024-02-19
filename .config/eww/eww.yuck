@@ -13,7 +13,9 @@
       :tooltip "${ESSID_WLAN}"
       :wrap "false" 
       :limit-width 12 
-      :style "color: ${COL_WLAN};" WLAN_ICON
+      :style "color: ${COL_WLAN};"
+      :onclick "st -e nmtui &"
+      WLAN_ICON
     )
   )
 )
@@ -28,7 +30,7 @@
   (eventbox :onhover "eww update date_rev_${screen}=true"
             :onhoverlost "eww update date_rev_${screen}=false"
     (box :class "clock_class" :space-evenly "false" :orientation "h" :spacing "3" 
-      (label :text clock_time :class "clock_time_class" )
+      (button :class "clock_time_class" :onclick "st -e tclock &" clock_time)
       (revealer 
         :transition "slideleft"
         :reveal {screen==0 ? date_rev_0 : date_rev_1}
@@ -71,6 +73,7 @@
 
 ;; Battery widget
 (defwidget bat []
+  
   (box 
     :class {EWW_BATTERY.BAT0.status == "Charging" ? "batcolor-charging" :
             EWW_BATTERY.BAT0.capacity < 20 ? "batcolor-20" :
@@ -79,69 +82,39 @@
             EWW_BATTERY.BAT0.capacity < 80 ? "batcolor-80" :
             "batcolor-100"} 
     :vexpand "false" :hexpand "false" 
-    (circular-progress :class "batbar" 
-      :value {EWW_BATTERY.BAT0.capacity}
-      :thickness 4
-      (button :class "iconbat"
-        :tooltip "${EWW_BATTERY.BAT0.status} ${EWW_BATTERY.BAT0.capacity}%"
-        :show_truncated false
-        :onclick "./scripts/pop system"
-        :wrap false
-        {EWW_BATTERY.BAT0.status == "Charging" ? "" :
-        EWW_BATTERY.BAT0.capacity < 20 ? "" :
-        EWW_BATTERY.BAT0.capacity < 40 ? "" :
-        EWW_BATTERY.BAT0.capacity < 60 ? "" :
-        EWW_BATTERY.BAT0.capacity < 80 ? "" :
-        ""}))))
-
-;; Memory widget
-(defwidget mem []
-  (box :class "mem_class" :vexpand "false" :hexpand "false" 
-    (circular-progress :class "membar"
-      :value {EWW_RAM.used_mem_perc}
-      :thickness 4
-      (button :class "iconmem"
-        :limit-width 2
-        :tooltip "RAM: ${round(EWW_RAM.used_mem / 1048576000, 2)} GiB"
-        :onclick "./scripts/pop system"
-        :show_truncated false
-        :wrap false
-        ""))))
-
-;; CPU widget
-(defwidget cpu []
-  (box :class "cpu_class" :vexpand "false" :hexpand "false" 
-    (circular-progress :class "cpubar"
-      :value {EWW_CPU.avg}
-      :thickness 4
-      (button :class "iconcpu"
-        :limit-width 2
-        :tooltip "CPU: ${round(EWW_CPU.avg, 1)}%"
-        :onclick "./scripts/pop system"
-        :show_truncated false
-        :wrap false
-        ""))))
+    (button :class "iconbat"
+      :tooltip "${EWW_BATTERY.BAT0.status} ${EWW_BATTERY.BAT0.capacity}%"
+      :show_truncated false
+      :onclick "./scripts/pop system"
+      :wrap false
+      {EWW_BATTERY.BAT0.status == "Charging" ? "󰂄" :
+      EWW_BATTERY.BAT0.capacity < 20 ? "󰂃" :
+      EWW_BATTERY.BAT0.capacity < 40 ? "󰁼" :
+      EWW_BATTERY.BAT0.capacity < 60 ? "󰁾" :
+      EWW_BATTERY.BAT0.capacity < 80 ? "󰂀" :
+      "󰁹"})))
 
 ;; Volume widget
-(defpoll volume_percent :interval "2s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
-(defpoll plug_status :interval "2s" "./scripts/plug_status")
-(defvar vol_reveal false)
-(defvar volume-muted false)
-(defwidget volume []
-  (eventbox :onhover "eww update vol_reveal=true"
-            :onhoverlost "eww update vol_reveal=false"
-  (box :class "volume_class" :space-evenly "false" :orientation "h" :spacing "3" 
-    (label :text {volume-muted ? "" :
-                  plug_status == "isPluggedIn" ? "" :
-                  volume_percent == 0 ? "" :
-                  volume_percent < 32 ? "" :
-                  volume_percent < 65 ? "" :
-                  ""}
-                  :class 'volume-icon ${volume-muted ? "volume-icon-muted" : ""}'
+(defpoll volume_percent :interval "1s" "pulsemixer --get-volume | awk '{ print $1 }'")
+(defpoll volume-muted :interval "1s" "pulsemixer --get-mute")
+(defvar vol_reveal_0 false)
+(defvar vol_reveal_1 false)
+(defwidget volume [screen]
+  (eventbox :onhover "eww update vol_reveal_${screen}=true"
+            :onhoverlost "eww update vol_reveal_${screen}=false"
+  (box :class "volume_class" :space-evenly "false" :orientation "h" :spacing "20" 
+    (button :onclick "pulsemixer --toggle-mute"
+      :onmiddleclick "st -e pulsemixer &"
+      :class 'volume-icon ${volume-muted==1 ? "volume-icon-muted" : ""}'
+      {volume-muted==1      ? "󰝟" :
+       volume_percent == 0  ? "" :
+       volume_percent <= 50 ? "" :
+                              ""}
+        
     )
     (revealer 
       :transition "slideleft"
-      :reveal vol_reveal
+      :reveal { screen == 0 ? vol_reveal_0 : vol_reveal_1 }
       :duration "350ms"
       (scale  :class "volbar"
         :value volume_percent
@@ -149,7 +122,32 @@
         :tooltip "${volume_percent}%"
         :max 100
         :min 0
-        :onchange "amixer -D pulse sset Master {}%" )))))
+        :onchange "pulsemixer --set-volume {}" )))))
+
+
+  (defpoll brightness_percent :interval "1s" "brightnessctl --machine-readable | awk '{split($0,a,\",\"); print substr(a[4], 1, length(a[4])-1)}'")
+  (defvar bri_reveal_0 false)
+  (defvar bri_reveal_1 false)
+  (defwidget brightness [screen]
+    (eventbox :onhover "eww update bri_reveal_${screen}=true"
+              :onhoverlost "eww update bri_reveal_${screen}=false"
+    (box :class "brightness_class" :space-evenly "false" :orientation "h" :spacing "20" 
+      (label
+        :class "brightness-icon" 
+        :text "󰃠"
+      )
+      (revealer 
+        :transition "slideleft"
+        :reveal { screen == 0 ? bri_reveal_0 : bri_reveal_1 }
+        :duration "350ms"
+        (scale  :class "bribar"
+          :value brightness_percent
+          :orientation "h"
+          :tooltip "${brightness_percent}%"
+          :max 100
+          :min 0
+          :onchange "brightnessctl s {}%" )))))
+    
 
 (defwidget right [screen]
   (box
@@ -157,12 +155,10 @@
     :halign "end"
     :space-evenly false  
     (sep)
-;;      (cpu)
-;;      (mem)
-;;      (bat)
-;;      (sep)
-;;      (volume)
-;;      (sep)
+    (brightness :screen screen)
+    (volume :screen screen) 
+;;    (sep)
+    (bat)
     (internet)
     (sep)
     (clock :screen screen)

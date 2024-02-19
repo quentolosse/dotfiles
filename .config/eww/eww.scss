@@ -11,6 +11,7 @@ $yellow: #F1FA8C;
 $blue: #6272A4;
 $magenta: #BD93F9;
 $cyan: #8BE9FD;
+$cyan700: rgba(128, 255, 234, 0.7);
 $white: #F8F8F2;
 
 *{
@@ -20,7 +21,7 @@ $white: #F8F8F2;
 
 /** tooltip!! **/
 tooltip.background {
-    background-color: $black;
+    background-color: $background;
     font-size: 15;
     border-radius: 10px;
     color: $foreground;
@@ -107,8 +108,8 @@ calendar:indeterminate {
 .separ {
     color: $gray;
     font-weight: bold;
-    font-size: 20px;
-    margin: 5px 5px 0px 5px;
+    font-size: 25px;
+    margin: 5px 5px 2px 5px;
 }
 
 // Battery
@@ -116,26 +117,26 @@ calendar:indeterminate {
     background-color: #38384d;
 }
 .iconbat {
-    font-size: 18px;
+    font-size: 20px;
     margin: 11px;
 }
 .batcolor-100 {
-    color: #6CC551;
+    color: $green;
 }
 .batcolor-80 {
-    color: #C0D684;
+    color: $green;
 }
 .batcolor-60 {
-    color: #34dCDF;
+    color: $yellow;
 }
 .batcolor-40 {
-    color: #F2AF29;
+    color: $orange;
 }
 .batcolor-20 {
-    color: #BA1F33;
+    color: $red;
 }
 .batcolor-charging {
-    color: #F5F749;
+    color: $orange;
 }
 
 // Memory
@@ -170,7 +171,6 @@ calendar:indeterminate {
 scale trough {
   all: unset;
   background-color: #22242b;
-  box-shadow: 0 2px 3px 2px #06060b;
   border-radius: 16px;
   min-height: 10px;
   min-width: 70px;
@@ -179,19 +179,32 @@ scale trough {
 
 // Volume
 .volume_class {
-    margin: 0px 5px 0px 10px;
+    margin: 0px -10px 0px 0px;
 }
 .volbar trough highlight {
-    background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+    background-image: linear-gradient(to left, $cyan 0%, $cyan700 100% *50);
     border-radius: 10px;
 }
 .volume-icon {
-    font-size: 22;
-    color: #a1bdce;
+    font-size: 35;
+    color: $cyan700;
 }
 .volume-icon-muted {
-    font-size: 22;
+    font-size: 35;
     color: $red;
+}
+
+// Brightness
+.brigtheness_class {
+    margin: 0px -10px 0px 10px;
+}
+.bribar trough highlight {
+    background-image: linear-gradient(to left, $yellow 0%, #FACE77 100% *50);
+    border-radius: 10px;
+}
+.brightness-icon {
+    font-size: 35;
+    color: #FACE77;
 }
 
 // Tags
@@ -228,5 +241,5 @@ scale trough {
 }
 
 .tag_class {
-    padding: 5px 5px 5px 15px;
+    padding: 7px 5px 5px 15px;
 }
