@@ -1,0 +1,17 @@
+{
+  "workbench.colorTheme": "Dracula",
+  "workbench.statusBar.visible": false,
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "none",
+  "editor.fontFamily": "SF Mono",
+  "terminal.integrated.fontFamily": "SF Mono",
+  "editor.fontWeight": "600",
+  "editor.fontSize": 24,
+  "terminal.integrated.fontWeight": "800",
+  "terminal.integrated.fontSize": 28,
+  "editor.formatOnSave": false,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "workbench.activityBar.location": "hidden",
+  "markdown.preview.fontSize": 25,
+  "window.zoomLevel": 1
+}

@@ -1,0 +1,20 @@
+{
+    "workbench.colorTheme": "Dracula Clean",
+    "cmake.showOptionsMovedNotification": false,
+    "git.openRepositoryInParentFolders": "never",
+    "files.autoSave": "afterDelay",
+    "window.menuBarVisibility": "toggle",
+    "cmake.configureOnOpen": false,
+    "launch": {
+        "justMyCode": false,
+        "configurations": [],
+        "compounds": []
+    },
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "editor.fontFamily": "'JetBrainsMono NFM', 'monospace', monospace"
+}

@@ -1,0 +1,8 @@
+{
+    "workbench.colorTheme": "Dracula Clean",
+    "files.autoSave": "afterDelay",
+    "C_Cpp.autocompleteAddParentheses": true,
+    "cmake.configureOnOpen": false,
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+    "terminal.integrated.enableMultiLinePasteWarning": false
+}
