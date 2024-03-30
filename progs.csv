@@ -1,0 +1,69 @@
+#TAG,NAME IN REPO (or git url),PURPOSE (should be a verb phrase to sound right while installing)
+,xorg-server,is the main graphical server
+,xorg-xinit,is the command to start xorg
+,xdotool,is a cli to do keyboard presses
+,xwallpaper,is a wallpaper utility
+,picom,compositor for X server
+,gnome-keyring,serves as the system keyring
+,slock,allows you to lock computer
+,ffmpeg,can record and splice video and audio on the command line
+,pulseaudio,is an audio server
+A,sennheiser-gsp670-pulseaudio-profile,is a patch of pulseaudio for my headphones
+,mpd,is a lightweight music daemon
+,mpc,is a terminal interface for mpd
+,mpv,is the patrician's choice video player
+,starship,is a command prompt
+,stow,is a dotfile manager
+#, UTILITAIRES CLI (HARDWARE / SYSTEM),
+,pulsemixer,is an audio manager
+,xrandr,is a monitor manager
+,btop,is a system ressources monitor
+,bandwhich,is a network trafic monitor
+,brightnessctl,is a brightness controller
+,powertop,is a battery power manager
+A,downgrade,is a utility to fix version problems
+A,betterdiscordctl,is an auto-installer for BetterDiscord
+,networkmanager,is a network manager
+,neofetch,is l'outil de flex ultime :)
+#, UTILITAIRES CLI (le reste),
+A,exif,is an exif viewer
+,flameshot,is a screenshot software
+,gdb,is the GNU debugger
+,jq,is a JSON processor
+,lolcat,rainbow terminal !
+,man-pages,linux man pages
+,man-db,lets you read man pages of programs
+,tldr,shorter version of man pages
+#, PROGRAMMES TUI
+A,calcure,is a calendar / task manager
+A,cava,is an audio visualizer
+,clock-tui,is the BEST COMMAND EVER
+A,lavat-git,beautiful lava lamp in terminal
+,lf,is a terminal file manager
+,ncmpcpp,a ncurses interface for music
+,nano,is the best CLI text editor
+#, COMMAND LINE MAIN
+,zsh-autosuggestions,autosuggestions for zsh
+,zsh-syntax-highlighting,syntax highlighting for zsh
+,bat,is a better version of cat
+,dust,is a better version of du
+,eza,is a better version of ls
+,fd,is a better version of find
+,xcp,is a better version of cp
+,zoxide,is a better version of cd
+,sl,is nothing. Tip : dont type sl instead of ls
+,unrar,unzip rar files
+,unzip,unzip zip files
+,zip,creates zip files
+#, UTILITAIRES GUI,
+,arandr,is a monitor manager (GUI for xrandr)
+,gparted,is a partition manager
+,isoimagewriter,is an iso writer
+,rofi,is an app launcher
+,rofi-calc,is the calc module for rofi
+#, PROGRAMMES GUI
+,discord,*does this really needs a description ?*
+,firefox,is a web browser
+A,visual-studio-code-bin,is a good code editor
+,ttf-jetbrains-mono,is a good font
+,ttf-jetbrains-mono-nerd,is a good font (support for emojis)

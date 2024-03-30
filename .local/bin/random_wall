@@ -1,0 +1,8 @@
+#!/bin/bash
+wallpaperdir='/home/quentin/Nextcloud/Walls/random_dracula'
+
+randompic=$(find $wallpaperdir -type f | sort -R | head -1)
+
+echo $randompic
+
+xwallpaper --zoom "$randompic"
