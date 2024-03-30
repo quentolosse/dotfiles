@@ -255,6 +255,14 @@ installationloop
 # other unnecessary files.
 mkdir "/home/$name/dotfiles"
 putgitrepo "$dotfilesrepo" "/home/$name/dotfiles" "$repobranch"
+cd "/home/$name/dotfiles"
+stow .
+cd "/home/$name/.local/dwm"
+make clean install
+cd "/home/$name/.local/st"
+make clean install
+cd "/"
+
 
 
 # Most important command! Get rid of the beep!
