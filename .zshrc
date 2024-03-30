@@ -64,7 +64,8 @@ alias \
 	lt="exa -l --header --git --icons --tree --color=auto" \
 	la="ll -a" \
 	find="fd" \
-	du="dust"
+	du="dust" \
+	less="bat"
 
 # auto cd
 setopt autocd
